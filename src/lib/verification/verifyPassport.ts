@@ -55,10 +55,7 @@ export async function verifyPassport(extracted: ExtractedPassport): Promise<Veri
       comparisons: rejectedComparisons.map(c => ({ field: c.field, match: c.match }))
     });
     
-    const msgUint8 = new TextEncoder().encode(canonicalString);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const resultHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    const resultHash = require('crypto').createHash('sha256').update(canonicalString).digest('hex');
 
     const documentDataForHash = {
       documentNumber: extracted.documentNumber,
@@ -67,8 +64,7 @@ export async function verifyPassport(extracted: ExtractedPassport): Promise<Veri
       dateOfBirth: extracted.dateOfBirth
     };
     const docHashStr = JSON.stringify(documentDataForHash, Object.keys(documentDataForHash).sort());
-    const docHashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(docHashStr));
-    const documentHash = Array.from(new Uint8Array(docHashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+    const documentHash = require('crypto').createHash('sha256').update(docHashStr).digest('hex');
 
     const partialResult: VerificationResult = {
       verificationId,
@@ -194,11 +190,8 @@ export async function verifyPassport(extracted: ExtractedPassport): Promise<Veri
     comparisons: comparisons.map(c => ({ field: c.field, match: c.match }))
   });
   
-  // SHA-256 Web Crypto Implementation
-  const msgUint8 = new TextEncoder().encode(canonicalString);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const resultHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  // SHA-256 Node Crypto Implementation
+  const resultHash = require('crypto').createHash('sha256').update(canonicalString).digest('hex');
 
   const documentDataForHash = {
     documentNumber: extracted.documentNumber,
@@ -207,8 +200,7 @@ export async function verifyPassport(extracted: ExtractedPassport): Promise<Veri
     dateOfBirth: extracted.dateOfBirth
   };
   const docHashStr = JSON.stringify(documentDataForHash, Object.keys(documentDataForHash).sort());
-  const docHashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(docHashStr));
-  const documentHash = Array.from(new Uint8Array(docHashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+  const documentHash = require('crypto').createHash('sha256').update(docHashStr).digest('hex');
 
   const finalResult: VerificationResult = {
     verificationId,
