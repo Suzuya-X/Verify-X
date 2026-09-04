@@ -1,4 +1,3 @@
-import { submitFabricTransaction, verifyFabricIntegrity } from './fabric';
 import { BlockchainAuditRecord, FabricAnchorResponse, IntegrityCheckResponse } from './types';
 
 // Export types so other files can just import from adapter.ts if they want
@@ -20,6 +19,7 @@ export async function anchorToBlockchain(record: BlockchainAuditRecord): Promise
   console.log('Attempting to anchor to Fabric...');
   
   try {
+    const { submitFabricTransaction } = await import('./fabric');
     const txId = await submitFabricTransaction(record);
     return {
       txId,
@@ -45,6 +45,7 @@ export async function verifyBlockchainIntegrity(verificationId: string, currentH
   }
 
   try {
+    const { verifyFabricIntegrity } = await import('./fabric');
     return await verifyFabricIntegrity(verificationId, currentHash);
   } catch (error: any) {
     console.error('Fabric integrity verification failed:', error.message);

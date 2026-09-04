@@ -13,11 +13,21 @@ import { verifyBlockchainIntegrity } from '@/lib/blockchain/adapter';
 import { IntegrityCheckResponse } from '@/lib/blockchain/types';
 
 export async function verifyDocumentAction(extracted: ExtractedPassport): Promise<VerificationResult> {
-  return await verifyPassport(extracted);
+  try {
+    return await verifyPassport(extracted);
+  } catch (error: any) {
+    console.error('[CRITICAL] verifyDocumentAction crashed:', error);
+    throw new Error(error.message || 'Internal Verification Error');
+  }
 }
 
 export async function verifyIntegrityAction(verificationId: string, currentHash: string): Promise<IntegrityCheckResponse> {
-  return await verifyBlockchainIntegrity(verificationId, currentHash);
+  try {
+    return await verifyBlockchainIntegrity(verificationId, currentHash);
+  } catch (error: any) {
+    console.error('[CRITICAL] verifyIntegrityAction crashed:', error);
+    throw new Error(error.message || 'Internal Integrity Error');
+  }
 }
 
 /**
