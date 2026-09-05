@@ -295,8 +295,8 @@ export default function ResultDemoPage() {
               {/* Score pills */}
               <div className="flex flex-wrap gap-3 mt-5">
                 <div className="flex items-center gap-2 bg-slate-800/70 border border-slate-700 rounded-xl px-4 py-2">
-                  <span className={`text-2xl font-bold text-${themeColor}-400`}>{displayResult.verificationScore}/100</span>
-                  <span className="text-xs text-slate-500 font-medium leading-tight">Verification<br/>Score</span>
+                  <span className={`text-2xl font-bold text-${themeColor}-400`}>{100 - displayResult.verificationScore}/100</span>
+                  <span className="text-xs text-slate-500 font-medium leading-tight">Risk<br/>Score</span>
                 </div>
                 <div className="flex items-center gap-2 bg-slate-800/70 border border-slate-700 rounded-xl px-4 py-2">
                   <span className={`text-2xl font-bold text-${themeColor}-400`}>{displayResult.rulesPassed}/{displayResult.rulesEvaluated}</span>
@@ -509,13 +509,13 @@ export default function ResultDemoPage() {
             {/* Score bar */}
             <div className="mb-6">
               <div className="flex justify-between text-xs text-slate-500 mb-1">
-                <span>Verification Score</span>
-                <span className={`font-bold text-${themeColor}-400`}>{displayResult.verificationScore}/100</span>
+                <span>Risk Score</span>
+                <span className={`font-bold text-${themeColor}-400`}>{100 - displayResult.verificationScore}/100</span>
               </div>
               <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                 <div
                   className={`h-full bg-${themeColor}-500 rounded-full transition-all duration-700`}
-                  style={{ width: `${displayResult.verificationScore}%` }}
+                  style={{ width: `${100 - displayResult.verificationScore}%` }}
                 />
               </div>
             </div>

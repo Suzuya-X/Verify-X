@@ -79,8 +79,8 @@ export default function Hero() {
             {/* Score pills */}
             <div className="flex gap-3">
               <div className="flex-1 bg-slate-800/70 border border-slate-700 rounded-xl px-4 py-3 text-center">
-                <div className="text-xl font-bold text-emerald-400">100/100</div>
-                <div className="text-xs text-slate-500 mt-0.5">Verification Score</div>
+                <div className="text-xl font-bold text-emerald-400">0/100</div>
+                <div className="text-xs text-slate-500 mt-0.5">Risk Score</div>
               </div>
               <div className="flex-1 bg-slate-800/70 border border-slate-700 rounded-xl px-4 py-3 text-center">
                 <div className="text-xl font-bold text-emerald-400">7/7</div>
